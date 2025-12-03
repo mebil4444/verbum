@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flamanca Fiil Kartı (B1)</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Calibri, Arial, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .card-wrapper {
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 160px;
+      height: 160px; /* kare */
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      cursor: pointer;
+    }
+
+    .card.is-flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      padding: 8px;
+      backface-visibility: hidden;
+      font-size: 20px;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-family: Calibri, Arial, sans-serif;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 2px solid #000000;
+      background-color: #ffffff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flamanca B1 Fiil Kartı</h1>
+
+  <div class="card-wrapper">
+    <div class="card" id="card">
+      <div class="card-inner">
+        <div class="card-face card-front" id="front-text">
+          <!-- Infinitief buraya gelecek -->
+        </div>
+        <div class="card-face card-back" id="back-text">
+          <!-- Imperfectum buraya gelecek -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="change-btn">Değiştir</button>
+
+  <script>
+    // Fiil listesi (infinitief + imperfectum)
+    const verbs = [
+      { infinitive: "zijn", imperfectum: "was / waren" },
+      { infinitive: "hebben", imperfectum: "had / hadden" },
+      { infinitive: "gaan", imperfectum: "ging / gingen" },
+      { infinitive: "komen", imperfectum: "kwam / kwamen" },
+      { infinitive: "doen", imperfectum: "deed / deden" },
+      { infinitive: "maken", imperfectum: "maakte / maakten" },
+      { infinitive: "zeggen", imperfectum: "zei / zeiden" },
+      { infinitive: "spreken", imperfectum: "sprak / spraken" },
+      { infinitive: "praten", imperfectum: "praatte / praatten" },
+      { infinitive: "lezen", imperfectum: "las / lazen" },
+      { infinitive: "schrijven", imperfectum: "schreef / schreven" },
+      { infinitive: "wonen", imperfectum: "woonde / woonden" },
+      { infinitive: "werken", imperfectum: "werkte / werkten" },
+      { infinitive: "leren", imperfectum: "leerde / leerden" },
+      { infinitive: "studeren", imperfectum: "studeerde / studeerden" },
+      { infinitive: "geven", imperfectum: "gaf / gaven" },
+      { infinitive: "nemen", imperfectum: "nam / namen" },
+      { infinitive: "horen", imperfectum: "hoorde / hoorden" },
+      { infinitive: "luisteren", imperfectum: "luisterde / luisterden" },
+      { infinitive: "zien", imperfectum: "zag / zagen" },
+      { infinitive: "kijken", imperfectum: "keek / keken" },
+      { infinitive: "blijven", imperfectum: "bleef / bleven" },
+      { infinitive: "vinden", imperfectum: "vond / vonden" },
+      { infinitive: "denken", imperfectum: "dacht / dachten" },
+      { infinitive: "weten", imperfectum: "wist / wisten" },
+      { infinitive: "begrijpen", imperfectum: "begreep / begrepen" },
+      { infinitive: "vragen", imperfectum: "vroeg / vroegen" },
+      { infinitive: "antwoorden", imperfectum: "antwoordde / antwoordden" },
+      { infinitive: "gebruiken", imperfectum: "gebruikte / gebruikten" },
+      { infinitive: "beginnen", imperfectum: "begon / begonnen" },
+      { infinitive: "proberen", imperfectum: "probeerde / probeerden" },
+      { infinitive: "lopen", imperfectum: "liep / liepen" },
+      { infinitive: "wandelen", imperfectum: "wandelde / wandelden" },
+      { infinitive: "rijden", imperfectum: "reed / reden" },
+      { infinitive: "eten", imperfectum: "at / aten" },
+      { infinitive: "drinken", imperfectum: "dronk / dronken" },
+      { infinitive: "kopen", imperfectum: "kocht / kochten" },
+      { infinitive: "betalen", imperfectum: "betaalde / betaalden" },
+      { infinitive: "helpen", imperfectum: "hielp / hielpen" },
+      { infinitive: "slapen", imperfectum: "sliep / sliepen" },
+      { infinitive: "spelen", imperfectum: "speelde / speelden" },
+      { infinitive: "wachten", imperfectum: "wachtte / wachtten" },
+      { infinitive: "koken", imperfectum: "kookte / kookten" },
+      { infinitive: "bakken", imperfectum: "bakte / bakten" },
+      { infinitive: "voelen", imperfectum: "voelde / voelden" },
+      { infinitive: "zitten", imperfectum: "zat / zaten" },
+      { infinitive: "staan", imperfectum: "stond / stonden" },
+      { infinitive: "liggen", imperfectum: "lag / lagen" },
+
+      { infinitive: "openen", imperfectum: "opende / openden" },
+      { infinitive: "sluiten", imperfectum: "sloot / sloten" },
+      { infinitive: "bellen", imperfectum: "belde / belden" },
+      { infinitive: "ontmoeten", imperfectum: "ontmoette / ontmoetten" },
+      { infinitive: "bezoeken", imperfectum: "bezocht / bezochten" },
+      { infinitive: "bestellen", imperfectum: "bestelde / bestelden" },
+      { infinitive: "sturen", imperfectum: "stuurde / stuurden" },
+      { infinitive: "reizen", imperfectum: "reisde / reisden" },
+      { infinitive: "vliegen", imperfectum: "vloog / vlogen" },
+      { infinitive: "vertrekken", imperfectum: "vertrok / vertrokken" },
+      { infinitive: "aankomen", imperfectum: "kwam aan / kwamen aan" },
+      { infinitive: "vergeten", imperfectum: "vergat / vergaten" },
+      { infinitive: "verliezen", imperfectum: "verloor / verloren" },
+      { infinitive: "winnen", imperfectum: "won / wonnen" },
+      { infinitive: "dienen", imperfectum: "diende / dienden" },
+      { infinitive: "hopen", imperfectum: "hoopte / hoopten" },
+      { infinitive: "missen", imperfectum: "miste / misten" },
+      { infinitive: "veranderen", imperfectum: "veranderde / veranderden" },
+      { infinitive: "uitleggen", imperfectum: "legde uit / legden uit" },
+      { infinitive: "bespreken", imperfectum: "besprak / bespraken" },
+      { infinitive: "verhuizen", imperfectum: "verhuisde / verhuisden" },
+      { infinitive: "dragen", imperfectum: "droeg / droegen" },
+      { infinitive: "trekken", imperfectum: "trok / trokken" },
+      { infinitive: "duwen", imperfectum: "duwde / duwden" },
+      { infinitive: "poetsen", imperfectum: "poetste / poetsten" },
+      { infinitive: "schoonmaken", imperfectum: "maakte schoon / maakten schoon" },
+      { infinitive: "verbranden", imperfectum: "verbrandde / verbrandden" },
+      { infinitive: "zwemmen", imperfectum: "zwom / zwommen" },
+      { infinitive: "vallen", imperfectum: "viel / vielen" },
+      { infinitive: "kiezen", imperfectum: "koos / kozen" },
+      { infinitive: "lijken", imperfectum: "leek / leken" },
+      { infinitive: "houden (van)", imperfectum: "hield / hielden" },
+      { infinitive: "brengen", imperfectum: "bracht / brachten" },
+      { infinitive: "zoeken", imperfectum: "zocht / zochten" },
+      { infinitive: "zetten", imperfectum: "zette / zetten" },
+      { infinitive: "ontvangen", imperfectum: "ontving / ontvingen" },
+      { infinitive: "tekenen", imperfectum: "tekende / tekenden" },
+      { infinitive: "bouwen", imperfectum: "bouwde / bouwden" },
+      { infinitive: "leven", imperfectum: "leefde / leefden" },
+      { infinitive: "gebeuren", imperfectum: "gebeurde / gebeurden" },
+      { infinitive: "herinneren", imperfectum: "herinnerde / herinnerden" },
+      { infinitive: "trouwen", imperfectum: "trouwde / trouwden" },
+      { infinitive: "verzorgen", imperfectum: "verzorgde / verzorgden" },
+      { infinitive: "reserveren", imperfectum: "reserveerde / reserveerden" },
+      { infinitive: "huren", imperfectum: "huurde / huurden" },
+      { infinitive: "sparen", imperfectum: "spaarde / spaarden" }
+    ];
+
+    const card = document.getElementById("card");
+    const frontText = document.getElementById("front-text");
+    const backText = document.getElementById("back-text");
+    const changeBtn = document.getElementById("change-btn");
+
+    function setRandomVerb() {
+      const randomIndex = Math.floor(Math.random() * verbs.length);
+      const verb = verbs[randomIndex];
+
+      frontText.textContent = verb.infinitive;
+      backText.textContent = verb.imperfectum;
+
+      // Kartı her seferinde tekrar ön yüze döndür
+      card.classList.remove("is-flipped");
+    }
+
+    // İlk kelimeyi yükle
+    setRandomVerb();
+
+    // Kart tıklanınca çevir
+    card.addEventListener("click", () => {
+      card.classList.toggle("is-flipped");
+    });
+
+    // "Değiştir" butonuna basınca yeni random kelime
+    changeBtn.addEventListener("click", () => {
+      setRandomVerb();
+    });
+  </script>
+</body>
+</html>
