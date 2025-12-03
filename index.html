@@ -24,12 +24,12 @@
     }
 
     .card-wrapper {
-      perspective: 1000px;
+      perspective: 2000px;
     }
 
     .card {
-      width: 1400px;
-      height: 1400px; /* kare */
+      width: 1440px;
+      height: 1440px; /* büyük kare */
     }
 
     .card-inner {
@@ -50,8 +50,8 @@
       width: 100%;
       height: 100%;
       box-sizing: border-box;
-      border: 2px solid #000000;
-      border-radius: 8px;
+      border: 6px solid #000000;
+      border-radius: 20px;
       background-color: #ffffff;
       color: #000000;
       display: flex;
@@ -59,22 +59,22 @@
       justify-content: center;
       text-align: center;
       font-weight: bold;
-      padding: 8px;
+      padding: 20px;
       backface-visibility: hidden;
-      font-size: 20px;
+      font-size: 160pt; /* İSTEDİĞİN YENİ BOYUT */
     }
 
     .card-back {
       transform: rotateY(180deg);
-      font-size: 160px;
+      font-size: 130pt; /* biraz daha küçük */
     }
 
     button {
-      padding: 8px 16px;
+      padding: 20px 40px;
       font-family: Calibri, Arial, sans-serif;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 2px solid #000000;
+      font-size: 40px;
+      border-radius: 12px;
+      border: 4px solid #000000;
       background-color: #ffffff;
       cursor: pointer;
       font-weight: bold;
@@ -91,20 +91,15 @@
   <div class="card-wrapper">
     <div class="card" id="card">
       <div class="card-inner">
-        <div class="card-face card-front" id="front-text">
-          <!-- Infinitief buraya gelecek -->
-        </div>
-        <div class="card-face card-back" id="back-text">
-          <!-- Imperfectum buraya gelecek -->
-        </div>
+        <div class="card-face card-front" id="front-text"></div>
+        <div class="card-face card-back" id="back-text"></div>
       </div>
     </div>
   </div>
 
-  <button id="change-btn">Değiştir</button>
+  <button id="change-btn">Wijzig</button>
 
   <script>
-    // Fiil listesi (infinitief + imperfectum)
     const verbs = [
       { infinitive: "zijn", imperfectum: "was / waren" },
       { infinitive: "hebben", imperfectum: "had / hadden" },
@@ -215,19 +210,15 @@
       frontText.textContent = verb.infinitive;
       backText.textContent = verb.imperfectum;
 
-      // Kartı her seferinde tekrar ön yüze döndür
       card.classList.remove("is-flipped");
     }
 
-    // İlk kelimeyi yükle
     setRandomVerb();
 
-    // Kart tıklanınca çevir
     card.addEventListener("click", () => {
       card.classList.toggle("is-flipped");
     });
 
-    // "Değiştir" butonuna basınca yeni random kelime
     changeBtn.addEventListener("click", () => {
       setRandomVerb();
     });
