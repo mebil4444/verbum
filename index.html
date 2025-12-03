@@ -29,8 +29,8 @@
     }
 
     .card {
-      width: 700px;
-      height: 1200px; /* Telefon için ideal */
+      width: 900px;
+      height: 1400px; /* Telefon için istediğin boyut */
     }
 
     .card-inner {
@@ -62,7 +62,7 @@
       font-weight: bold;
       padding: 20px;
       backface-visibility: hidden;
-      font-size: 120px; /* Yeni fiil yazısı boyutu */
+      font-size: 120px; /* Fiiller 120 px */
     }
 
     .card-back {
@@ -70,10 +70,18 @@
       font-size: 100px;
     }
 
+    #tr-text {
+      font-family: Calibri, Arial, sans-serif;
+      font-size: 30px;
+      color: #808080;
+      text-align: center;
+      max-width: 900px;
+    }
+
     button {
       padding: 20px 40px;
       font-family: Calibri, Arial, sans-serif;
-      font-size: 40px; /* Yeni buton yazı boyutu */
+      font-size: 40px; /* Wijzig 40 px */
       border-radius: 12px;
       border: 4px solid #000000;
       background-color: #ffffff;
@@ -98,110 +106,115 @@
     </div>
   </div>
 
+  <div id="tr-text"></div>
+
   <button id="change-btn">Wijzig</button>
 
   <script>
+    // PDF’teki fiiller + imperfectum + Türkçe anlam
     const verbs = [
-      { infinitive: "zijn", imperfectum: "was / waren" },
-      { infinitive: "hebben", imperfectum: "had / hadden" },
-      { infinitive: "gaan", imperfectum: "ging / gingen" },
-      { infinitive: "komen", imperfectum: "kwam / kwamen" },
-      { infinitive: "doen", imperfectum: "deed / deden" },
-      { infinitive: "maken", imperfectum: "maakte / maakten" },
-      { infinitive: "zeggen", imperfectum: "zei / zeiden" },
-      { infinitive: "spreken", imperfectum: "sprak / spraken" },
-      { infinitive: "praten", imperfectum: "praatte / praatten" },
-      { infinitive: "lezen", imperfectum: "las / lazen" },
-      { infinitive: "schrijven", imperfectum: "schreef / schreven" },
-      { infinitive: "wonen", imperfectum: "woonde / woonden" },
-      { infinitive: "werken", imperfectum: "werkte / werkten" },
-      { infinitive: "leren", imperfectum: "leerde / leerden" },
-      { infinitive: "studeren", imperfectum: "studeerde / studeerden" },
-      { infinitive: "geven", imperfectum: "gaf / gaven" },
-      { infinitive: "nemen", imperfectum: "nam / namen" },
-      { infinitive: "horen", imperfectum: "hoorde / hoorden" },
-      { infinitive: "luisteren", imperfectum: "luisterde / luisterden" },
-      { infinitive: "zien", imperfectum: "zag / zagen" },
-      { infinitive: "kijken", imperfectum: "keek / keken" },
-      { infinitive: "blijven", imperfectum: "bleef / bleven" },
-      { infinitive: "vinden", imperfectum: "vond / vonden" },
-      { infinitive: "denken", imperfectum: "dacht / dachten" },
-      { infinitive: "weten", imperfectum: "wist / wisten" },
-      { infinitive: "begrijpen", imperfectum: "begreep / begrepen" },
-      { infinitive: "vragen", imperfectum: "vroeg / vroegen" },
-      { infinitive: "antwoorden", imperfectum: "antwoordde / antwoordden" },
-      { infinitive: "gebruiken", imperfectum: "gebruikte / gebruikten" },
-      { infinitive: "beginnen", imperfectum: "begon / begonnen" },
-      { infinitive: "proberen", imperfectum: "probeerde / probeerden" },
-      { infinitive: "lopen", imperfectum: "liep / liepen" },
-      { infinitive: "wandelen", imperfectum: "wandelde / wandelden" },
-      { infinitive: "rijden", imperfectum: "reed / reden" },
-      { infinitive: "eten", imperfectum: "at / aten" },
-      { infinitive: "drinken", imperfectum: "dronk / dronken" },
-      { infinitive: "kopen", imperfectum: "kocht / kochten" },
-      { infinitive: "betalen", imperfectum: "betaalde / betaalden" },
-      { infinitive: "helpen", imperfectum: "hielp / hielpen" },
-      { infinitive: "slapen", imperfectum: "sliep / sliepen" },
-      { infinitive: "spelen", imperfectum: "speelde / speelden" },
-      { infinitive: "wachten", imperfectum: "wachtte / wachtten" },
-      { infinitive: "koken", imperfectum: "kookte / kookten" },
-      { infinitive: "bakken", imperfectum: "bakte / bakten" },
-      { infinitive: "voelen", imperfectum: "voelde / voelden" },
-      { infinitive: "zitten", imperfectum: "zat / zaten" },
-      { infinitive: "staan", imperfectum: "stond / stonden" },
-      { infinitive: "liggen", imperfectum: "lag / lagen" },
+      { infinitive: "aandoen", imperfectum: "deed aan / deden aan", turkish: "takmak, açmak" },
+      { infinitive: "aankomen", imperfectum: "kwam aan / kwamen aan", turkish: "varmak, ulaşmak" },
+      { infinitive: "afwassen", imperfectum: "waste af / wasten af", turkish: "bulaşık yıkamak" },
+      { infinitive: "bakken", imperfectum: "bakte / bakten", turkish: "fırında pişirmek" },
+      { infinitive: "beginnen", imperfectum: "begon / begonnen", turkish: "başlamak" },
+      { infinitive: "begrijpen", imperfectum: "begreep / begrepen", turkish: "anlamak" },
+      { infinitive: "behangen", imperfectum: "behing / behingen", turkish: "duvar kâğıdı yapmak" },
+      { infinitive: "bewegen", imperfectum: "bewoog / bewogen", turkish: "hareket etmek" },
+      { infinitive: "bezoeken", imperfectum: "bezocht / bezochten", turkish: "ziyaret etmek" },
+      { infinitive: "bijten", imperfectum: "beet / beten", turkish: "ısırmak" },
+      { infinitive: "blazen", imperfectum: "blies / bliezen", turkish: "üflemek" },
+      { infinitive: "blijven", imperfectum: "bleef / bleven", turkish: "kalmak" },
+      { infinitive: "breken", imperfectum: "brak / braken", turkish: "kırmak" },
+      { infinitive: "brengen", imperfectum: "bracht / brachten", turkish: "getirmek" },
+      { infinitive: "denken", imperfectum: "dacht / dachten", turkish: "düşünmek" },
+      { infinitive: "doen", imperfectum: "deed / deden", turkish: "yapmak" },
+      { infinitive: "dragen", imperfectum: "droeg / droegen", turkish: "taşımak, giymek" },
+      { infinitive: "drinken", imperfectum: "dronk / dronken", turkish: "içmek" },
+      { infinitive: "eten", imperfectum: "at / aten", turkish: "yemek" },
+      { infinitive: "gaan", imperfectum: "ging / gingen", turkish: "gitmek" },
+      { infinitive: "genezen", imperfectum: "genas / genazen", turkish: "iyileştirmek, iyileşmek" },
+      { infinitive: "geven", imperfectum: "gaf / gaven", turkish: "vermek" },
+      { infinitive: "gieten", imperfectum: "goot / goten", turkish: "dökmek (sıvı)" },
+      { infinitive: "hangen", imperfectum: "hing / hingen", turkish: "asılı olmak, asmak" },
+      { infinitive: "hebben", imperfectum: "had / hadden", turkish: "sahip olmak" },
+      { infinitive: "helpen", imperfectum: "hielp / hielpen", turkish: "yardım etmek" },
+      { infinitive: "houden", imperfectum: "hield / hielden", turkish: "tutmak; sevmek (van)" },
+      { infinitive: "innemen", imperfectum: "nam in / namen in", turkish: "almak (ilaç vb.)" },
+      { infinitive: "kiezen", imperfectum: "koos / kozen", turkish: "seçmek" },
+      { infinitive: "kijken", imperfectum: "keek / keken", turkish: "bakmak, izlemek" },
+      { infinitive: "komen", imperfectum: "kwam / kwamen", turkish: "gelmek" },
+      { infinitive: "kopen", imperfectum: "kocht / kochten", turkish: "satın almak" },
+      { infinitive: "krijgen", imperfectum: "kreeg / kregen", turkish: "almak (elde etmek)" },
+      { infinitive: "kunnen", imperfectum: "kon / konden", turkish: "yapabilmek" },
+      { infinitive: "laten", imperfectum: "liet / lieten", turkish: "bırakmak, izin vermek" },
+      { infinitive: "lezen", imperfectum: "las / lazen", turkish: "okumak" },
+      { infinitive: "liggen", imperfectum: "lag / lagen", turkish: "yatmak, uzanmak, bulunmak" },
+      { infinitive: "lopen", imperfectum: "liep / liepen", turkish: "yürümek" },
+      { infinitive: "meenemen", imperfectum: "nam mee / namen mee", turkish: "yanında götürmek" },
+      { infinitive: "moeten", imperfectum: "moest / moesten", turkish: "zorunda olmak" },
+      { infinitive: "mogen", imperfectum: "mocht / mochten", turkish: "izinli olmak" },
+      { infinitive: "nakijken", imperfectum: "keek na / keken na", turkish: "kontrol etmek" },
+      { infinitive: "nemen", imperfectum: "nam / namen", turkish: "almak" },
+      { infinitive: "onderzoeken", imperfectum: "onderzocht / onderzochten", turkish: "araştırmak, incelemek" },
+      { infinitive: "ontbijten", imperfectum: "ontbeet / ontbeten", turkish: "kahvaltı yapmak" },
+      { infinitive: "opstaan", imperfectum: "stond op / stonden op", turkish: "kalkmak, uyanmak" },
+      { infinitive: "oversteken", imperfectum: "stak over / staken over", turkish: "karşıya geçmek" },
+      { infinitive: "rijden", imperfectum: "reed / reden", turkish: "araba sürmek, binmek" },
+      { infinitive: "roepen", imperfectum: "riep / riepen", turkish: "çağırmak, seslenmek" },
 
-      { infinitive: "openen", imperfectum: "opende / openden" },
-      { infinitive: "sluiten", imperfectum: "sloot / sloten" },
-      { infinitive: "bellen", imperfectum: "belde / belden" },
-      { infinitive: "ontmoeten", imperfectum: "ontmoette / ontmoetten" },
-      { infinitive: "bezoeken", imperfectum: "bezocht / bezochten" },
-      { infinitive: "bestellen", imperfectum: "bestelde / bestelden" },
-      { infinitive: "sturen", imperfectum: "stuurde / stuurden" },
-      { infinitive: "reizen", imperfectum: "reisde / reisden" },
-      { infinitive: "vliegen", imperfectum: "vloog / vlogen" },
-      { infinitive: "vertrekken", imperfectum: "vertrok / vertrokken" },
-      { infinitive: "aankomen", imperfectum: "kwam aan / kwamen aan" },
-      { infinitive: "vergeten", imperfectum: "vergat / vergaten" },
-      { infinitive: "verliezen", imperfectum: "verloor / verloren" },
-      { infinitive: "winnen", imperfectum: "won / wonnen" },
-      { infinitive: "dienen", imperfectum: "diende / dienden" },
-      { infinitive: "hopen", imperfectum: "hoopte / hoopten" },
-      { infinitive: "missen", imperfectum: "miste / misten" },
-      { infinitive: "veranderen", imperfectum: "veranderde / veranderden" },
-      { infinitive: "uitleggen", imperfectum: "legde uit / legden uit" },
-      { infinitive: "bespreken", imperfectum: "besprak / bespraken" },
-      { infinitive: "verhuizen", imperfectum: "verhuisde / verhuisden" },
-      { infinitive: "dragen", imperfectum: "droeg / droegen" },
-      { infinitive: "trekken", imperfectum: "trok / trokken" },
-      { infinitive: "duwen", imperfectum: "duwde / duwden" },
-      { infinitive: "poetsen", imperfectum: "poetste / poetsten" },
-      { infinitive: "schoonmaken", imperfectum: "maakte schoon / maakten schoon" },
-      { infinitive: "verbranden", imperfectum: "verbrandde / verbrandden" },
-      { infinitive: "zwemmen", imperfectum: "zwom / zwommen" },
-      { infinitive: "vallen", imperfectum: "viel / vielen" },
-      { infinitive: "kiezen", imperfectum: "koos / kozen" },
-      { infinitive: "lijken", imperfectum: "leek / leken" },
-      { infinitive: "houden (van)", imperfectum: "hield / hielden" },
-      { infinitive: "brengen", imperfectum: "bracht / brachten" },
-      { infinitive: "zoeken", imperfectum: "zocht / zochten" },
-      { infinitive: "zetten", imperfectum: "zette / zetten" },
-      { infinitive: "ontvangen", imperfectum: "ontving / ontvingen" },
-      { infinitive: "tekenen", imperfectum: "tekende / tekenden" },
-      { infinitive: "bouwen", imperfectum: "bouwde / bouwden" },
-      { infinitive: "leven", imperfectum: "leefde / leefden" },
-      { infinitive: "gebeuren", imperfectum: "gebeurde / gebeurden" },
-      { infinitive: "herinneren", imperfectum: "herinnerde / herinnerden" },
-      { infinitive: "trouwen", imperfectum: "trouwde / trouwden" },
-      { infinitive: "verzorgen", imperfectum: "verzorgde / verzorgden" },
-      { infinitive: "reserveren", imperfectum: "reserveerde / reserveerden" },
-      { infinitive: "huren", imperfectum: "huurde / huurden" },
-      { infinitive: "sparen", imperfectum: "spaarde / spaarden" }
+      { infinitive: "scheiden", imperfectum: "scheidde / scheidden", turkish: "ayırmak, boşanmak" },
+      { infinitive: "schijnen", imperfectum: "scheen / schenen", turkish: "parlamak, görünmek" },
+      { infinitive: "schrijven", imperfectum: "schreef / schreven", turkish: "yazmak" },
+      { infinitive: "slapen", imperfectum: "sliep / sliepen", turkish: "uyumak" },
+      { infinitive: "sluiten", imperfectum: "sloot / sloten", turkish: "kapatmak" },
+      { infinitive: "snijden", imperfectum: "sneed / sneden", turkish: "kesmek" },
+      { infinitive: "spreken", imperfectum: "sprak / spraken", turkish: "konuşmak" },
+      { infinitive: "springen", imperfectum: "sprong / sprongen", turkish: "zıplamak, atlamak" },
+      { infinitive: "staan", imperfectum: "stond / stonden", turkish: "ayakta durmak" },
+      { infinitive: "steken", imperfectum: "stak / staken", turkish: "sokmak, batırmak" },
+      { infinitive: "sterven", imperfectum: "stierf / stierven", turkish: "ölmek" },
+      { infinitive: "strijken", imperfectum: "streek / streken", turkish: "ütü yapmak" },
+      { infinitive: "treffen", imperfectum: "trof / troffen", turkish: "isabet etmek, rastlamak" },
+      { infinitive: "trekken", imperfectum: "trok / trokken", turkish: "çekmek" },
+      { infinitive: "uitdoen", imperfectum: "deed uit / deden uit", turkish: "çıkarmak, kapatmak" },
+      { infinitive: "uitgaan", imperfectum: "ging uit / gingen uit", turkish: "dışarı çıkmak" },
+      { infinitive: "uittrekken", imperfectum: "trok uit / trokken uit", turkish: "çıkarmak, sökmek" },
+      { infinitive: "vallen", imperfectum: "viel / vielen", turkish: "düşmek" },
+      { infinitive: "varen", imperfectum: "voer / voeren", turkish: "tekneyle gitmek" },
+      { infinitive: "verbieden", imperfectum: "verbood / verboden", turkish: "yasaklamak" },
+      { infinitive: "vergeten", imperfectum: "vergat / vergaten", turkish: "unutmak" },
+      { infinitive: "verkopen", imperfectum: "verkocht / verkochten", turkish: "satmak" },
+      { infinitive: "verliezen", imperfectum: "verloor / verloren", turkish: "kaybetmek" },
+      { infinitive: "verstaan", imperfectum: "verstond / verstonden", turkish: "duymak, anlamak" },
+      { infinitive: "vertrekken", imperfectum: "vertrok / vertrokken", turkish: "ayrılmak, yola çıkmak" },
+      { infinitive: "vervangen", imperfectum: "verving / vervingen", turkish: "değiştirmek, yerine koymak" },
+      { infinitive: "vinden", imperfectum: "vond / vonden", turkish: "bulmak" },
+      { infinitive: "vliegen", imperfectum: "vloog / vlogen", turkish: "uçmak" },
+      { infinitive: "voorkomen", imperfectum: "voorkwam / voorkwamen", turkish: "önlemek" },
+      { infinitive: "vragen", imperfectum: "vroeg / vroegen", turkish: "sormak, istemek" },
+      { infinitive: "vriezen", imperfectum: "het vroor", turkish: "donmak (hava)" },
+      { infinitive: "wassen", imperfectum: "waste / wasten", turkish: "yıkamak" },
+      { infinitive: "wegen", imperfectum: "woog / wogen", turkish: "tartmak, ağırlıkta olmak" },
+      { infinitive: "weten", imperfectum: "wist / wisten", turkish: "bilmek" },
+      { infinitive: "wijzen", imperfectum: "wees / wezen", turkish: "işaret etmek" },
+      { infinitive: "willen", imperfectum: "wou / wilde / wilden", turkish: "istemek" },
+      { infinitive: "winnen", imperfectum: "won / wonnen", turkish: "kazanmak" },
+      { infinitive: "worden", imperfectum: "werd / werden", turkish: "olmak, -hale gelmek" },
+      { infinitive: "zeggen", imperfectum: "zei / zeiden", turkish: "söylemek" },
+      { infinitive: "zien", imperfectum: "zag / zagen", turkish: "görmek" },
+      { infinitive: "zijn", imperfectum: "was / waren", turkish: "olmak" },
+      { infinitive: "zingen", imperfectum: "zong / zongen", turkish: "şarkı söylemek" },
+      { infinitive: "zitten", imperfectum: "zat / zaten", turkish: "oturmak" },
+      { infinitive: "zoeken", imperfectum: "zocht / zochten", turkish: "aramak" },
+      { infinitive: "zullen", imperfectum: "zou / zouden", turkish: "gelecek zaman yardımcı fiili" },
+      { infinitive: "zwemmen", imperfectum: "zwom / zwommen", turkish: "yüzmek" }
     ];
 
     const card = document.getElementById("card");
     const frontText = document.getElementById("front-text");
     const backText = document.getElementById("back-text");
+    const trText = document.getElementById("tr-text");
     const changeBtn = document.getElementById("change-btn");
 
     function setRandomVerb() {
@@ -210,16 +223,20 @@
 
       frontText.textContent = verb.infinitive;
       backText.textContent = verb.imperfectum;
+      trText.textContent = verb.turkish;
 
       card.classList.remove("is-flipped");
     }
 
+    // İlk fiili yükle
     setRandomVerb();
 
+    // Kart tıklanınca çevir
     card.addEventListener("click", () => {
       card.classList.toggle("is-flipped");
     });
 
+    // Wijzig butonuna basınca yeni fiil
     changeBtn.addEventListener("click", () => {
       setRandomVerb();
     });
