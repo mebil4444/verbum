@@ -30,7 +30,7 @@
 
     .card {
       width: 900px;
-      height: 1400px; /* Telefon için istediğin boyut */
+      height: 1400px; /* Telefon için boyut */
     }
 
     .card-inner {
@@ -78,6 +78,12 @@
       max-width: 900px;
     }
 
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
     button {
       padding: 20px 40px;
       font-family: Calibri, Arial, sans-serif;
@@ -108,7 +114,10 @@
 
   <div id="tr-text"></div>
 
-  <button id="change-btn">Wijzig</button>
+  <div class="buttons">
+    <button id="change-btn">Wijzig</button>
+    <button id="toggle-meaning-btn">Toon/verberg betekenis</button>
+  </div>
 
   <script>
     // Exceldeki fiiller: Infinitief + Imperfectum + 5 dil (TR, AR, FA, UK, DE)
@@ -181,6 +190,9 @@
     const backText = document.getElementById("back-text");
     const trText = document.getElementById("tr-text");
     const changeBtn = document.getElementById("change-btn");
+    const toggleMeaningBtn = document.getElementById("toggle-meaning-btn");
+
+    let meaningsVisible = true;
 
     function setRandomVerb() {
       const randomIndex = Math.floor(Math.random() * verbs.length);
@@ -219,6 +231,18 @@
     changeBtn.addEventListener("click", () => {
       setRandomVerb();
     });
+
+    // Anlamları göster/gizle butonu
+    toggleMeaningBtn.addEventListener("click", () => {
+      meaningsVisible = !meaningsVisible;
+      trText.style.display = meaningsVisible ? "block" : "none";
+      toggleMeaningBtn.textContent = meaningsVisible
+        ? "Verberg betekenis"
+        : "Toon betekenis";
+    });
+
+    // Başlangıçta metin görünsün
+    trText.style.display = "block";
   </script>
 </body>
 </html>
